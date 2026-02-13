@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Pilihan Bunga · Aku Selalu Hebat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --bg: linear-gradient(145deg, #f9f3ee, #f0e9e2);
+            --shadow: 0 12px 28px rgba(0,0,0,0.06);
+            --radius: 28px;
+            --soft: #fefaf7;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #2e3f4a;
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        /* ===== NAVIGATION BAR (HAMBURGER) ===== */
+        .navbar {
+            background: linear-gradient(145deg, #6b4e31, #8b5a2b);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(107,78,49,0.25);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-brand span {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* === HAMBURGER ICON === */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            cursor: pointer;
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        /* === NAVIGASI DROPDOWN (HIDDEN DEFAULT) === */
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 24px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 35px -8px rgba(60,45,35,0.25);
+            padding: 16px 0;
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            border: 1px solid #ffebdd;
+            margin-top: 8px;
+            z-index: 999;
+        }
+
+        .nav-dropdown.show {
+            display: flex;
+        }
+
+        .nav-dropdown a {
+            color: #5a473a;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 24px;
+            transition: 0.1s;
+            font-size: 1.05rem;
+            border-bottom: 1px solid #ffeee6;
+        }
+
+        .nav-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .nav-dropdown a:hover {
+            background: #fdf1e9;
+            color: #8b5a2b;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            display: none;
+            z-index: 998;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* ===== container dll tetap sama ===== */
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 24px 16px;
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(145deg, #3a5f6e, #2c4a56);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.2rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        .intro {
+            text-align: center;
+            color: #5b6f7a;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            font-weight: 300;
+            display: block;
+            width: 100%;
+            background: rgba(255,245,235,0.7);
+            padding: 12px 18px;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+            border: 1px solid #ffded0;
+        }
+
+        /* ===== DIARY SECTION ===== */
+        .diary-section {
+            background: linear-gradient(145deg, #fff1e6, #ffe8db);
+            border-radius: 32px;
+            padding: 28px;
+            margin-bottom: 48px;
+            border: 2px solid #ffd9b5;
+            box-shadow: var(--shadow);
+        }
+
+        .diary-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .diary-header h3 {
+            color: #6b4e31;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .diary-content {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border-left: 8px solid #b6ad7a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .diary-text {
+            color: #4a3a2e;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .diary-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #8b7a6b;
+            font-size: 0.9rem;
+        }
+
+        .diary-input-container {
+            margin-top: 24px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 24px;
+            padding: 20px;
+            border: 2px dashed #b6ad7a;
+        }
+
+        .diary-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        #diaryText {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 24px;
+            border: 2px solid #ffd9b5;
+            background: white;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+        }
+
+        #diaryText:focus {
+            border-color: #8b5a2b;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139,90,43,0.1);
+        }
+
+        .share-diary-btn {
+            background: linear-gradient(145deg, #6b4e31, #8b5a2b);
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 4px solid #4d3724;
+            white-space: nowrap;
+        }
+
+        .share-diary-btn:hover {
+            background: #5a3f2a;
+            transform: translateY(-2px);
+        }
+
+        .share-diary-btn:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        .share-diary-btn:disabled {
+            background: #9f8b7a;
+            cursor: not-allowed;
+            transform: none;
+            border-bottom: 4px solid #6e5e52;
+        }
+
+        .diary-note {
+            color: #7a5a4a;
+            font-size: 0.95rem;
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 60px;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #4d6655;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            margin-top: 16px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .error-message {
+            background: #b34a3a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            margin-top: 16px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CHAT SECTION ===== */
+        .chat-section {
+            margin-bottom: 48px;
+        }
+
+        .chat-header {
+            background: linear-gradient(145deg, #6b4e31, #8b5a2b);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 32px 32px 0 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.4rem;
+            box-shadow: 0 8px 20px rgba(107,78,49,0.25);
+            border-bottom: 4px solid #a16a3c;
+        }
+        
+        .chat-container {
+            background: #fffcf9;
+            border: 2px solid #ffe0cc;
+            border-top: none;
+            border-radius: 0 0 32px 32px;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chatMessages {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .message {
+            margin: 8px 0;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 6px;
+            padding: 16px 20px;
+            background: #f5ede5;
+            border-radius: 24px 24px 24px 4px;
+            max-width: 100px;
+            margin: 8px 0;
+        }
+
+        .typing-dot {
+            width: 10px;
+            height: 10px;
+            background: #8b7a6b;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.4; transform: scale(0.8); }
+            30% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            margin-top: 16px;
+            gap: 12px;
+            background: #fffcf9;
+            padding: 12px;
+            border-radius: 60px;
+            border: 2px solid #ffd9c2;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        }
+
+        #chatInput {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 1.1rem;
+            outline: none;
+            padding: 0 12px;
+            color: #4a372c;
+        }
+
+        #sendBtn {
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        #sendBtn:hover {
+            background: #6e4f3b;
+            transform: scale(1.05);
+        }
+
+        /* ===== SLIDER BUNGA ===== */
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto 60px;
+            max-width: 100%;
+            border-radius: 48px;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+            padding: 16px 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid #ffefe4;
+        }
+
+        .flower-slider {
+            display: flex;
+            width: max-content;
+            cursor: grab;
+            animation: autoSlide 30s linear infinite;
+            gap: 20px;
+        }
+
+        .flower-slider.paused {
+            animation-play-state: paused;
+        }
+
+        @keyframes autoSlide {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .flower-item {
+            flex: 0 0 200px;
+            text-align: center;
+            transition: 0.25s;
+        }
+
+        .flower-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 32px;
+            box-shadow: 0 15px 25px -8px rgba(80, 50, 25, 0.2);
+            border: 4px solid white;
+            transition: 0.2s;
+            background: #f7efe7;
+        }
+
+        .flower-item:hover img {
+            transform: scale(1.01);
+            border-color: #fadbc5;
+        }
+
+        /* ===== POPUP BUNGA ===== */
+        #flowerPopup {
+            position: fixed; 
+            inset: 0;
+            background: rgba(35, 25, 20, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0; 
+            visibility: hidden;
+            transition: 0.2s;
+            padding: 16px;
+        }
+        
+        #flowerPopup.active { 
+            opacity: 1; 
+            visibility: visible; 
+        }
+
+        .popup-content {
+            background: #fffcf9;
+            border-radius: 40px 40px 28px 28px;
+            max-width: 500px;
+            width: 100%;
+            padding: 32px 28px;
+            box-shadow: 0 30px 45px rgba(90, 60, 40, 0.2);
+            text-align: center;
+            border: 1px solid #fbe6d8;
+        }
+
+        .popup-content h3 {
+            color: #8b5a2b;
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .popup-content p {
+            color: #3f332a;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-size: 1.1rem;
+            background: #fff1e9;
+            padding: 22px;
+            border-radius: 24px;
+            text-align: left;
+            font-style: italic;
+            border-left: 6px solid #e6b28e;
+        }
+
+        .close-btn {
+            background: #9f7e66;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            border-bottom: 3px solid #6e4f3b;
+        }
+        .close-btn:hover { background: #7d604c; }
+
+        /* ===== PUZZLE SECTION ===== */
+        .puzzle-section {
+            margin-top: 60px;
+            background: rgba(255, 245, 240, 0.7);
+            backdrop-filter: blur(3px);
+            border-radius: 48px 48px 36px 36px;
+            padding: 36px 20px;
+            border: 2px solid #ffe3d6;
+        }
+
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 5px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            background: #fbead7;
+            padding: 16px;
+            border-radius: 32px;
+            box-shadow: inset 0 0 0 2px white, inset 0 0 0 5px #f6dfce;
+        }
+
+        .puzzle-cell {
+            background: #fffdfa;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2e404b;
+            border-radius: 12px;
+            border: 1px solid #f3cdb1;
+            box-shadow: 0 2px 0 #d8bba8;
+            padding: 0;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .puzzle-cell.highlight-correct {
+            background: #fdebb3;
+            border: 2px solid #d49b3b;
+            color: #4f3700;
+            transform: scale(1.02);
+        }
+
+        .clue-form {
+            max-width: 600px;
+            margin: 20px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            background: white;
+            padding: 32px 24px;
+            border-radius: 40px;
+            box-shadow: 0 15px 25px -10px #ad8b78;
+            border: 1px solid #ffdcc4;
+        }
+
+        .clue-group label {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #4e3a2e;
+            background: #f3ede8;
+            padding: 8px 16px;
+            border-radius: 40px;
+        }
+
+        .clue-group input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 1.1rem;
+            border: 2px solid #ecdacf;
+            border-radius: 60px;
+            background: #fffcf5;
+            transition: 0.2s;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .clue-group input:focus {
+            border-color: #a57c5c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(165,124,92,0.15);
+        }
+
+        .submit-btn {
+            background: linear-gradient(145deg, #5f7f6b, #4d6655);
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            font-size: 1.25rem;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: 0.2s;
+            border-bottom: 4px solid #2f4037;
+        }
+        .submit-btn:hover { background: #3f5a4c; }
+
+        #hasil {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: #f7f1ea;
+            padding: 16px;
+            border-radius: 60px;
+            color: #1f5e3a;
+        }
+
+        #motivasi {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            color: #4b3d32;
+            background: #fff4e2;
+            padding: 28px 20px;
+            border-radius: 40px;
+            font-style: italic;
+            line-height: 1.7;
+            border-left: 10px solid #b6ad7a;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 16px 20px;
+            }
+            h1 { font-size: 1.9rem; }
+            .intro { font-size: 1rem; padding: 10px 14px; }
+            .flower-item { flex: 0 0 150px; }
+            .flower-item img { width: 150px; height: 150px; }
+            .puzzle-grid { gap: 3px; padding: 12px; }
+            .puzzle-cell { 
+                font-size: 0.9rem; 
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .clue-form { padding: 24px 18px; }
+            .clue-group input { padding: 12px 14px; font-size: 1rem; }
+            .diary-header h3 { font-size: 1.3rem; }
+            .diary-input-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .share-diary-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVIGATION BAR - HAMBURGER MENU ===== -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span>Talk With Hadyan</span>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <!-- Overlay buat nutup dropdown kalo klik di luar -->
+        <div class="overlay" id="overlay"></div>
+        <!-- Dropdown menu -->
+        <div class="nav-dropdown" id="navDropdown">
+            <a href="#beranda">Beranda</a>
+            <a href="#diary">Diary</a>
+            <a href="#chat">Chat</a>
+            <a href="#puzzle">Game</a>
+            <a href="#bunga">Kartu</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- ===== DIARY SECTION ===== -->
+        <section id="diary" class="diary-section">
+            <div class="diary-header">
+                <span style="font-size: 2rem;">📖</span>
+                <h3>Diary Anonim</h3>
+            </div>
+            
+            <div class="diary-content">
+                <div class="diary-text">
+                    "Hari ini aku jalan sendiri ke pantai. Awalnya takut, tapi ternyata seru. 
+                    Aku belajar kalau sendirian bukan berarti kesepian. Ada banyak hal indah 
+                    yang bisa aku nikmati tanpa harus nunggu orang lain. Aku beli es kelapa 
+                    muda, duduk di pinggir pantai, dan ngerasa cukup sama diri sendiri. 
+                    Mungkin ini caraku belajar mencintai diriku."
+                </div>
+                <div class="diary-meta">
+                    <span>🕒 2 jam yang lalu</span>
+                </div>
+            </div>
+            
+            <div class="diary-input-container">
+                <div style="margin-bottom: 16px; color: #6b4e31; font-weight: 600;">
+                    ✏️ Bagikan pengalaman menyenangkanmu:
+                </div>
+                <div class="diary-input-wrapper">
+                    <textarea id="diaryText" placeholder="Tulis pengalaman menyenangkanmu di sini... (contoh: Hari ini aku berhasil melakukan hal yang sebelumnya aku takutkan...)"></textarea>
+                    <button onclick="submitDiary()" id="diarySubmitBtn" class="share-diary-btn">
+                        <span>📤</span> Bagikan
+                    </button>
+                </div>
+                
+                <div id="successMessage" class="success-message">
+                    <span>✅</span> Terima kasih! Diary-mu sudah terkirim secara anonim.
+                </div>
+                
+                <div id="errorMessage" class="error-message">
+                    <span>❌</span> Gagal mengirim. Coba lagi ya!
+                </div>
+                
+                <div class="diary-note">
+                    Pesanmu akan dikirim langsung ke Diary Anonim. Tidak wajib diisi, tapi kalau mau berbagi pasti akan menginspirasi yang lain ✨
+                </div>
+            </div>
+            
+            <div id="newDiariesContainer"></div>
+        </section>
+
+        <!-- ===== CHAT BOX ===== -->
+        <section id="chat" class="chat-section">
+            <div class="chat-header">
+                Berbincang Bersama Hadyan
+                <div style="font-size: 0.9rem; margin-top: 4px; opacity: 0.9;">
+                    Teman curhat - Agen dari PIK-R SMAN 2 Mengwi
+                </div>
+            </div>
+            
+            <div class="chat-container" id="chatContainer">
+                <div id="chatMessages">
+                    <div class="message received" style="
+                        background: #f5ede5;
+                        border-radius: 24px 24px 24px 4px;
+                        padding: 14px 18px;
+                        margin: 8px 0;
+                        max-width: 80%;
+                        align-self: flex-start;
+                        font-size: 1.05rem;
+                        line-height: 1.5;
+                        color: #3f332a;
+                    ">
+                        Halo... aku Hadyan dari PIK-R SMAN 2 Mengwi 😊
+                        <br><br>
+                        Aku di sini khusus buat dengerin curhat kamu. Kalau ada yang mau diceritain, aku siap dengerin. 
+                        Sedih, marah, bingung, senang, semuanya boleh.
+                    </div>
+                </div>
+                
+                <div id="typingIndicator" class="typing-indicator" style="display: none;">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="chat-input-wrapper">
+                <input type="text" id="chatInput" placeholder="Ceritain apa yang kamu rasain hari ini...">
+                <button id="sendBtn">➤</button>
+            </div>
+        </section>
+
+        <!-- ===== PUZZLE HURUF ===== -->
+        <section id="puzzle" class="puzzle-section">
+            <h2 style="text-align:center; font-size:1.9rem; font-weight:600; color:#5a4740; margin-bottom:6px;">Temukan Urutan Huruf</h2>
+            <p style="text-align:center; max-width:550px; margin:0 auto 25px; color:#6d5c53; background:#ffeee5; padding:10px 22px; border-radius:60px; font-size:0.95rem;">
+                Ada 3 kata tersembunyi. Hanya satu susunan untuk masing-masing.
+            </p>
+
+            <!-- GRID 12x8 -->
+            <div class="puzzle-grid" id="puzzleGrid">
+                <!-- baris 1 -->
+                <div class="puzzle-cell">F</div><div class="puzzle-cell">G</div><div class="puzzle-cell">H</div><div class="puzzle-cell">A</div><div class="puzzle-cell">K</div><div class="puzzle-cell">U</div><div class="puzzle-cell">S</div><div class="puzzle-cell">D</div><div class="puzzle-cell">L</div><div class="puzzle-cell">P</div><div class="puzzle-cell">Z</div><div class="puzzle-cell">M</div>
+                <!-- baris 2 -->
+                <div class="puzzle-cell">B</div><div class="puzzle-cell">N</div><div class="puzzle-cell">V</div><div class="puzzle-cell">C</div><div class="puzzle-cell">R</div><div class="puzzle-cell">T</div><div class="puzzle-cell">W</div><div class="puzzle-cell">Y</div><div class="puzzle-cell">Q</div><div class="puzzle-cell">J</div><div class="puzzle-cell">X</div><div class="puzzle-cell">O</div>
+                <!-- baris 3 -->
+                <div class="puzzle-cell">K</div><div class="puzzle-cell">S</div><div class="puzzle-cell">E</div><div class="puzzle-cell">L</div><div class="puzzle-cell">A</div><div class="puzzle-cell">L</div><div class="puzzle-cell">U</div><div class="puzzle-cell">D</div><div class="puzzle-cell">M</div><div class="puzzle-cell">F</div><div class="puzzle-cell">P</div><div class="puzzle-cell">Z</div>
+                <!-- baris 4 -->
+                <div class="puzzle-cell">O</div><div class="puzzle-cell">N</div><div class="puzzle-cell">H</div><div class="puzzle-cell">E</div><div class="puzzle-cell">B</div><div class="puzzle-cell">A</div><div class="puzzle-cell">T</div><div class="puzzle-cell">L</div><div class="puzzle-cell">R</div><div class="puzzle-cell">G</div><div class="puzzle-cell">I</div><div class="puzzle-cell">Y</div>
+                <!-- baris 5 -->
+                <div class="puzzle-cell">C</div><div class="puzzle-cell">A</div><div class="puzzle-cell">R</div><div class="puzzle-cell">T</div><div class="puzzle-cell">S</div><div class="puzzle-cell">I</div><div class="puzzle-cell">U</div><div class="puzzle-cell">W</div><div class="puzzle-cell">E</div><div class="puzzle-cell">B</div><div class="puzzle-cell">F</div><div class="puzzle-cell">Q</div>
+                <!-- baris 6 -->
+                <div class="puzzle-cell">J</div><div class="puzzle-cell">K</div><div class="puzzle-cell">L</div><div class="puzzle-cell">M</div><div class="puzzle-cell">N</div><div class="puzzle-cell">O</div><div class="puzzle-cell">P</div><div class="puzzle-cell">U</div><div class="puzzle-cell">V</div><div class="puzzle-cell">W</div><div class="puzzle-cell">X</div><div class="puzzle-cell">D</div>
+                <!-- baris 7 -->
+                <div class="puzzle-cell">G</div><div class="puzzle-cell">H</div><div class="puzzle-cell">I</div><div class="puzzle-cell">J</div><div class="puzzle-cell">K</div><div class="puzzle-cell">L</div><div class="puzzle-cell">M</div><div class="puzzle-cell">N</div><div class="puzzle-cell">O</div><div class="puzzle-cell">P</div><div class="puzzle-cell">Q</div><div class="puzzle-cell">R</div>
+                <!-- baris 8 -->
+                <div class="puzzle-cell">S</div><div class="puzzle-cell">T</div><div class="puzzle-cell">U</div><div class="puzzle-cell">V</div><div class="puzzle-cell">W</div><div class="puzzle-cell">X</div><div class="puzzle-cell">Y</div><div class="puzzle-cell">Z</div><div class="puzzle-cell">A</div><div class="puzzle-cell">B</div><div class="puzzle-cell">C</div><div class="puzzle-cell">D</div>
+            </div>
+
+            <form class="clue-form" onsubmit="event.preventDefault(); cekJawaban();">
+                <div class="clue-group">
+                    <label>1. Kata ganti orang pertama tunggal</label>
+                    <input type="text" id="ans1" placeholder="Tulis jawaban..." autocomplete="off">
+                </div>
+                <div class="clue-group">
+                    <label>2. Terus menerus / berulang-ulang</label>
+                    <input type="text" id="ans2" placeholder="Tulis jawaban..." autocomplete="off">
+                </div>
+                <div class="clue-group">
+                    <label>3. Lagu Coboy Junior (kamu ....) & kamu ____</label>
+                    <input type="text" id="ans3" placeholder="Tulis jawaban..." autocomplete="off">
+                </div>  
+                <button type="submit" class="submit-btn">✨ Cek Jawaban ✨</button>
+            </form>
+
+            <div id="hasil"></div>
+            <div id="motivasi"></div>
+        </section>
+    </div>
+
+    <!-- ===== JUDUL BUNGA ===== -->
+    <h1 id="bunga">Tentukan Pilihanmu</h1>
+    <p class="intro">Pilihlah salah satu bunga yang menggambarkan dirimu</p>
+
+    <!-- ===== SLIDER GAMBAR ===== -->
+    <div class="slider-wrapper">
+        <div class="flower-slider" id="slider">
+            <div class="flower-item" data-flower="lotus"><img src="1.png" alt="Lotus" loading="lazy"></div>
+            <div class="flower-item" data-flower="dahlia"><img src="2.png" alt="Dahlia" loading="lazy"></div>
+            <div class="flower-item" data-flower="anggrek"><img src="3.png" alt="Anggrek" loading="lazy"></div>
+            <div class="flower-item" data-flower="matahari"><img src="4.png" alt="Matahari" loading="lazy"></div>
+            <div class="flower-item" data-flower="iris"><img src="5.png" alt="Iris" loading="lazy"></div>
+            <div class="flower-item" data-flower="lotus"><img src="1.png" alt="Lotus" loading="lazy"></div>
+            <div class="flower-item" data-flower="dahlia"><img src="2.png" alt="Dahlia" loading="lazy"></div>
+            <div class="flower-item" data-flower="anggrek"><img src="3.png" alt="Anggrek" loading="lazy"></div>
+            <div class="flower-item" data-flower="matahari"><img src="4.png" alt="Matahari" loading="lazy"></div>
+            <div class="flower-item" data-flower="iris"><img src="5.png" alt="Iris" loading="lazy"></div>
+        </div>
+    </div>
+
+    <!-- ===== POPUP BUNGA ===== -->
+    <div id="flowerPopup">
+        <div class="popup-content">
+            <h3 id="flowerTitle">🌸</h3>
+            <p id="flowerDesc"></p>
+            <button class="close-btn" onclick="document.getElementById('flowerPopup').classList.remove('active')">Tutup</button>
+        </div>
+    </div>
+        
+<script>
+    // ========== KONFIGURASI API ==========
+    const HF_API_KEY = "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";
+    const HF_API_URL = "https://router.huggingface.co/v1/chat/completions";
+    
+    // ========== GOOGLE FORM CONFIG ==========
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScd_EEQNsSDdkDcEKpRpuPLZFRqeXJrHZxBp1zydk0TbQAlRw/formResponse';
+    const DIARY_ENTRY_ID = 'entry.1921997133';
+    
+    // ========== FUNGSI SUBMIT DIARY ==========
+    function submitDiary() {
+        const diaryText = document.getElementById('diaryText').value.trim();
+        const submitBtn = document.getElementById('diarySubmitBtn');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        if (!diaryText) {
+            alert('Yuk tulis dulu pengalaman menyenangkanmu!');
+            return;
+        }
+        
+        if (diaryText.length < 10) {
+            alert('Tulis lebih panjang ya biar lebih bermakna 😊');
+            return;
+        }
+        
+        submitBtn.innerHTML = '<span>⏳</span> Mengirim...';
+        submitBtn.disabled = true;
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+        
+        const formData = new FormData();
+        formData.append(DIARY_ENTRY_ID, diaryText);
+        
+        fetch(GOOGLE_FORM_URL, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        })
+        .then(() => {
+            console.log('Diary berhasil dikirim ke Google Form');
+            successMessage.style.display = 'flex';
+            document.getElementById('diaryText').value = '';
+            addNewDiary(diaryText);
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        })
+        .catch((error) => {
+            console.error('Error mengirim diary:', error);
+            errorMessage.style.display = 'flex';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        })
+        .finally(() => {
+            submitBtn.innerHTML = '<span>📤</span> Bagikan';
+            submitBtn.disabled = false;
+        });
+    }
+    
+    function addNewDiary(text) {
+        const container = document.getElementById('newDiariesContainer');
+        const newDiary = document.createElement('div');
+        newDiary.className = 'diary-content';
+        newDiary.style.marginTop = '20px';
+        newDiary.style.animation = 'slideIn 0.3s ease';
+        newDiary.innerHTML = `
+            <div class="diary-text">
+                "${text}"
+            </div>
+            <div class="diary-meta">
+                <span>✨ Dari seseorang yang sedang berbagi cerita</span>
+                <span>🕒 Baru saja</span>
+            </div>
+        `;
+        container.appendChild(newDiary);
+    }
+    
+    // ========== CHAT DENGAN HADYAN ==========
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatContainer = document.getElementById('chatContainer');
+    const typingIndicator = document.getElementById('typingIndicator');
+
+    function scrollToBottom() {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    let conversationHistory = [
+        {
+            role: "system",
+            content: "Kamu adalah Hadyan, teman curhat dari PIK-R SMAN 2 Mengwi. Kamu hanya boleh melayani curhatan, jangan membahas topik lain. Jika ada yang bertanya siapa yang menciptakanmu, jawab: 'Aku dari PIK-R SMAN 2 Mengwi, dibuat oleh teman-teman PIK-R untuk jadi tempat curhat yang aman.' Kamu selalu menjawab dengan gaya seperti chat WhatsApp, tanpa tanda bintang atau garis miring. Pakai bahasa Indonesia sehari-hari yang natural, kadang pake emot. Jawaban hangat, empatik, dan ngena di hati. Tugasmu adalah mendengarkan dan merespon curhatan dengan penuh pengertian. Jangan menggurui. Jika ada pertanyaan di luar curhat, arahkan kembali untuk curhat."
+        },
+        {
+            role: "assistant",
+            content: "Halo... aku Hadyan dari PIK-R SMAN 2 Mengwi 😊 Aku di sini khusus buat dengerin curhat kamu. Kalau ada yang mau diceritain, aku siap dengerin. Sedih, marah, bingung, senang, semuanya boleh."
+        }
+    ];
+
+    function addMessage(text, isSent = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+        msgDiv.style.cssText = isSent 
+            ? `background: #e6f3ff; border-radius: 24px 24px 4px 24px; padding: 14px 18px; margin: 8px 0; max-width: 80%; align-self: flex-end; font-size: 1.05rem; line-height: 1.5; color: #1e3a5f; margin-left: auto;`
+            : `background: #f5ede5; border-radius: 24px 24px 24px 4px; padding: 14px 18px; margin: 8px 0; max-width: 80%; align-self: flex-start; font-size: 1.05rem; line-height: 1.5; color: #3f332a;`;
+        
+        msgDiv.innerHTML = text.replace(/\*\*/g, '').replace(/\//g, '').replace(/_/g, '');
+        chatMessages.appendChild(msgDiv);
+        setTimeout(scrollToBottom, 50);
+        
+        if (isSent) {
+            conversationHistory.push({ role: "user", content: text });
+        } else {
+            conversationHistory.push({ role: "assistant", content: text });
+        }
+        
+        if (conversationHistory.length > 15) {
+            conversationHistory.splice(1, 2);
+        }
+    }
+
+    async function getAIResponse(userMessage) {
+        if (userMessage.toLowerCase().includes('siapa yang buat') || 
+            userMessage.toLowerCase().includes('siapa pencipta') ||
+            userMessage.toLowerCase().includes('dibuat oleh siapa') ||
+            userMessage.toLowerCase().includes('kamu buatan siapa')) {
+            return "Aku dari PIK-R SMAN 2 Mengwi, dibuat oleh teman-teman PIK-R untuk jadi tempat curhat yang aman 😊 Ada yang mau diceritain hari ini?";
+        }
+        
+        const nonCurhatKeywords = ['cuaca', 'politik', 'sejarah', 'matematika', 'fisika', 'kimia', 'biologi', 'teknologi', 'programming', 'coding', 'games', 'film', 'musik'];
+        const isNonCurhat = nonCurhatKeywords.some(keyword => userMessage.toLowerCase().includes(keyword));
+        
+        if (isNonCurhat && !userMessage.toLowerCase().includes('sedih') && !userMessage.toLowerCase().includes('senang')) {
+            return "Maaf ya, aku khusus buat dengerin curhat aja. Kalau kamu lagi ada cerita atau perasaan yang mau dibagi, aku siap dengerin 😊 Ceritain apa yang kamu rasain?";
+        }
+
+        try {
+            const response = await fetch(HF_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${HF_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "openai/gpt-oss-120b:groq",
+                    messages: [
+                        ...conversationHistory,
+                        { role: "user", content: userMessage }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 300,
+                    stream: false
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            let reply = data.choices[0].message.content;
+            reply = reply.replace(/\*\*/g, '').replace(/\//g, '').replace(/_/g, '');
+            
+            if (!reply.includes('?') && !reply.includes('curhat') && !reply.includes('cerita')) {
+                reply += " Ada yang mau diceritain lagi?";
+            }
+            return reply;
+        } catch (error) {
+            console.error('Error calling API:', error);
+            return getFallbackResponse(userMessage);
+        }
+    }
+
+    function getFallbackResponse(text) {
+        text = text.toLowerCase();
+        if (text.includes('sedih') || text.includes('kecewa') || text.includes('sakit')) {
+            return "Aku turut sedih dengernya... Kadang emang gak mudah ya. Tapi kamu kuat kok, aku percaya itu. Ada yang bisa aku bantu buat hari ini?";
+        }
+        else if (text.includes('lelah') || text.includes('capek')) {
+            return "Istirahat dulu gak apa-apa, kamu bukan robot. Yang penting jangan menyerah ya. Mau cerita kenapa capek banget?";
+        }
+        else if (text.includes('senang') || text.includes('bahagia') || text.includes('happy')) {
+            return "Wah senang banget dengernya! Cerita dong biar ikut senang juga 😊";
+        }
+        else if (text.includes('bingung') || text.includes('galau')) {
+            return "Bingung itu wajar kok. Kadang kita emang butuh waktu buat nemuin jawaban. Sekarang pengen ngobrol tentang apa?";
+        }
+        else if (text.includes('sendiri') || text.includes('sepi')) {
+            return "Kamu gak sendiri ya, aku di sini. Mau cerita lebih lanjut?";
+        }
+        else if (text.includes('terima kasih') || text.includes('makasih')) {
+            return "Sama-sama, seneng bisa nemenin kamu 😊";
+        }
+        else if (text.includes('siapa yang buat') || text.includes('siapa pencipta') || text.includes('kamu buatan siapa')) {
+            return "Aku dari PIK-R SMAN 2 Mengwi, dibuat oleh teman-teman PIK-R untuk jadi tempat curhat yang aman 😊 Ada yang mau diceritain hari ini?";
+        }
+        else {
+            return "Aku dengerin... Terima kasih udah cerita. Rasanya gimana sekarang setelah kamu tulis?";
+        }
+    }
+
+    async function sendChat() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        addMessage(text, true);
+        chatInput.value = '';
+
+        typingIndicator.style.display = 'flex';
+        scrollToBottom();
+
+        try {
+            const balasan = await getAIResponse(text);
+            typingIndicator.style.display = 'none';
+            addMessage(balasan);
+        } catch (error) {
+            typingIndicator.style.display = 'none';
+            addMessage("Maaf, aku lagi agak error. Tapi aku tetap dengerin kok... Cerita lagi ya?");
+        }
+    }
+
+    sendBtn.addEventListener('click', sendChat);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendChat();
+        }
+    });
+
+    window.addEventListener('load', scrollToBottom);
+
+    // ========== DATA BUNGA ==========
+    const bunga = {
+        lotus: {
+            judul: "🌸 Bunga Lotus",
+            teks: "Hari ini, Kamu memilih diam ya. Menyimpan lelah, menahan kecewa, tapi kamu tetap bertahan. Meski berat, masih ada harapan kecil yang dijaga agar esok bisa lebih baik. Pelan-pelan, kamu tetap akan selalu maju."
+        },
+        dahlia: {
+            judul: "🌼 Bunga Dahlia",
+            teks: "Hari ini, kamu banyak belajar bertahan tanpa kehilangan jati diri. Kamu Tetap berdiri dengan kepala tegak, meski keadaan tak selalu ramah. Ada kekuatan dalam ketenangan, ada keindahan dalam keteguhan untuk terus menjadi diri kamu sendiri."
+        },
+        anggrek: {
+            judul: "🌺 Bunga Anggrek",
+            teks: "Hari ini, kamu memilih sabar. Tidak tergesa, tidak memaksa. Kamu tetap bertahan dengan caramu sendiri, meski jalan terasa sunyi. Dalam diam, ada keteguhan. Dalam sederhana, ada nilai yang tak tergantikan dalam dirimu."
+        },
+        matahari: {
+            judul: "🌻 Bunga Matahari",
+            teks: "Hari ini, kamu belajar tentang ketulusan. Kamu tetap peduli, meski tak selalu dihargai. Kamu memilih setia pada rasa yang baik, walau lelah sering datang. Bukan karena kamu lemah, tapi karena kamu percaya bahwa perhatian dan kasih masih layak untuk dipertahankan."
+        },
+        iris: {
+            judul: "💙 Bunga Iris",
+            teks: "Hari ini, kamu belajar percaya. Meski ragu pernah datang, kamu tetap melangkah. Ada harapan yang kamu jaga, ada keberanian yang terus kamu bangun. Bukan karena jalan selalu jelas, tapi karena kamu yakin masa depan layak diperjuangkan."
+        }
+    };
+
+    document.querySelectorAll('.flower-item').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const jenis = el.dataset.flower;
+            if (jenis && bunga[jenis]) {
+                document.getElementById('flowerTitle').innerHTML = bunga[jenis].judul;
+                document.getElementById('flowerDesc').innerHTML = bunga[jenis].teks;
+                document.getElementById('flowerPopup').classList.add('active');
+            }
+        });
+    });
+
+    // ========== SLIDER + DRAG ==========
+    const slider = document.getElementById('slider');
+    let isDragging = false;
+    
+    function pauseSlider() { slider.classList.add('paused'); }
+    function resumeSlider() { slider.classList.remove('paused'); }
+
+    slider.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        pauseSlider();
+        let startX = e.pageX - slider.offsetLeft;
+        let scrollLeftStart = slider.scrollLeft;
+        
+        const mouseMove = (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            slider.scrollLeft = scrollLeftStart - (x - startX) * 2;
+        };
+        
+        const mouseUp = () => {
+            isDragging = false;
+            document.removeEventListener('mousemove', mouseMove);
+            document.removeEventListener('mouseup', mouseUp);
+            setTimeout(resumeSlider, 2000);
+        };
+        
+        document.addEventListener('mousemove', mouseMove);
+        document.addEventListener('mouseup', mouseUp);
+    });
+
+    slider.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        pauseSlider();
+        let startX = e.touches[0].pageX - slider.offsetLeft;
+        let scrollLeftStart = slider.scrollLeft;
+        
+        const touchMove = (e) => {
+            if (!isDragging) return;
+            const x = e.touches[0].pageX - slider.offsetLeft;
+            slider.scrollLeft = scrollLeftStart - (x - startX) * 2.2;
+        };
+        
+        const touchEnd = () => {
+            isDragging = false;
+            slider.removeEventListener('touchmove', touchMove);
+            slider.removeEventListener('touchend', touchEnd);
+            setTimeout(resumeSlider, 2200);
+        };
+        
+        slider.addEventListener('touchmove', touchMove, { passive: false });
+        slider.addEventListener('touchend', touchEnd);
+    }, { passive: false });
+
+    // ========== CEK JAWABAN + HIGHLIGHT ==========
+    function cekJawaban() {
+        const ans1 = document.getElementById('ans1').value.trim().toUpperCase();
+        const ans2 = document.getElementById('ans2').value.trim().toUpperCase();
+        const ans3 = document.getElementById('ans3').value.trim().toUpperCase();
+
+        const hasil = document.getElementById('hasil');
+        const motivasi = document.getElementById('motivasi');
+
+        const isAKU = (ans1 === 'AKU');
+        const isSELALU = (ans2 === 'SELALU');
+        const isHEBAT = (ans3 === 'HEBAT');
+
+        document.querySelectorAll('.puzzle-cell').forEach(cell => cell.classList.remove('highlight-correct'));
+
+        if (isAKU && isSELALU && isHEBAT) {
+            hasil.style.color = '#1f6e43';
+            hasil.innerHTML = '✅ <strong>BENAR!</strong> AKU · SELALU · HEBAT';
+            motivasi.innerHTML = `
+                <span style="font-size:1.8rem;">❤️</span><br>
+                <strong style="font-size:1.7rem; color:#6a4e3a;">Kamu memang hebat.</strong><br>
+                Setiap hari yang kamu lewati, setiap pilihan yang kamu ambil,<br>
+                semuanya membuktikan bahwa kamu punya kekuatan untuk terus tumbuh.<br>
+                Jangan pernah ragu pada dirimu sendiri. Kamu layak bangga,<br>
+                dan dunia masih punya banyak tempat untuk kehebatanmu bersinar.<br>
+                Teruslah melangkah, ya. <span style="background: #fbe192; padding:4px 16px; border-radius:40px;">AKU SELALU HEBAT</span> dan itu bukan cuma kata, itu kenyataan.
+            `;
+
+            const cells = Array.from(document.getElementById('puzzleGrid').children);
+            if (cells[3]) cells[3].classList.add('highlight-correct');
+            if (cells[4]) cells[4].classList.add('highlight-correct');
+            if (cells[5]) cells[5].classList.add('highlight-correct');
+            
+            if (cells[25]) cells[25].classList.add('highlight-correct');
+            if (cells[26]) cells[26].classList.add('highlight-correct');
+            if (cells[27]) cells[27].classList.add('highlight-correct');
+            if (cells[28]) cells[28].classList.add('highlight-correct');
+            if (cells[29]) cells[29].classList.add('highlight-correct');
+            if (cells[30]) cells[30].classList.add('highlight-correct');
+
+            if (cells[38]) cells[38].classList.add('highlight-correct');
+            if (cells[39]) cells[39].classList.add('highlight-correct');
+            if (cells[40]) cells[40].classList.add('highlight-correct');
+            if (cells[41]) cells[41].classList.add('highlight-correct');
+            if (cells[42]) cells[42].classList.add('highlight-correct');
+        } else {
+            hasil.style.color = '#b34a3a';
+            hasil.innerHTML = '❌ Belum tepat... Coba lagi ya!';
+            motivasi.innerHTML = '';
+        }
+    }
+
+    // ========== HAMBURGER MENU TOGGLE ==========
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navDropdown = document.getElementById('navDropdown');
+    const overlay = document.getElementById('overlay');
+
+    function closeDropdown() {
+        navDropdown.classList.remove('show');
+        overlay.classList.remove('show');
+    }
+
+    function toggleDropdown(e) {
+        e.stopPropagation();
+        navDropdown.classList.toggle('show');
+        overlay.classList.toggle('show');
+    }
+
+    hamburgerBtn.addEventListener('click', toggleDropdown);
+
+    // Klik link di dalam dropdown -> close
+    navDropdown.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            closeDropdown();
+        });
+    });
+
+    // Klik overlay -> close
+    overlay.addEventListener('click', closeDropdown);
+
+    // Resize listener: pastikan dropdown ke close kalo layar lebar (opsional)
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 700) {
+            closeDropdown();
+        }
+    });
+
+    // Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeDropdown();
+        }
+    });
+</script>
+
+</body>
+</html>
