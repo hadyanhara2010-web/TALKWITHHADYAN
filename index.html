@@ -248,15 +248,6 @@
             transform: none;
             border-bottom: 4px solid #6e5e52;
         }
-        .diary-note {
-            color: #7a5a4a;
-            font-size: 0.95rem;
-            margin-top: 16px;
-            padding: 12px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 60px;
-            text-align: center;
-        }
         .success-message {
             background: #4d6655;
             color: white;
@@ -282,6 +273,15 @@
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        .diary-note {
+            color: #7a5a4a;
+            font-size: 0.95rem;
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 60px;
+            text-align: center;
         }
 
         /* Chat section dihapus sesuai permintaan */
@@ -691,6 +691,11 @@
             .mekar-resource-icon{ width:70px; height:70px; }
             .mekar-progress-phase{ font-size:1.2rem; }
         }
+
+        /* Form pengiriman tersembunyi untuk Google Form */
+        .hidden-form {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -737,7 +742,7 @@
                 </div>
                 <div class="diary-input-wrapper">
                     <textarea id="diaryText" placeholder="Tulis pengalaman menyenangkanmu di sini... (contoh: Hari ini aku berhasil melakukan hal yang sebelumnya aku takutkan...)"></textarea>
-                    <button onclick="submitDiary()" id="diarySubmitBtn" class="share-diary-btn">
+                    <button onclick="submitToGoogleForm()" id="diarySubmitBtn" class="share-diary-btn">
                         <span>📤</span> Bagikan
                     </button>
                 </div>
@@ -753,6 +758,14 @@
             </div>
             <div id="newDiariesContainer"></div>
         </section>
+
+        <!-- Hidden iframe untuk submit form tanpa reload -->
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+        
+        <!-- Hidden form untuk submit ke Google Form -->
+        <form class="hidden-form" id="googleForm" action="https://docs.google.com/forms/d/e/1FAIpQLScd_EEQNsSDdkDcEKpRpuPLZFRqeXJrHZxBp1zydk0TbQAlRw/formResponse" method="POST" target="hidden_iframe">
+            <input type="text" name="entry.1921997133" id="entryValue" value="">
+        </form>
 
         <!-- BAGIAN CHAT DIHAPUS SESUAI PERMINTAAN -->
 
@@ -799,7 +812,7 @@
 
             <!-- GABUNGAN GAME.HTML (tanaman) di bawah puzzle, tanpa mengubah apapun -->
             <div style="margin-top: 50px;">
-                <h3 style="text-align:center; color:#6b4e31;">🌱 Bunga Harapan, rawatlah hingga mekar</h3>
+                <h3 style="text-align:center; color:#6b4e31;">🌱 Mekar Harapan — rawat hingga mekar</h3>
                 <div class="mekar-game-container" id="mekar-game-container">
                     <canvas id="mekar-canvas"></canvas>
                     <div class="mekar-plant-highlight" id="mekar-plant-highlight"></div>
@@ -927,6 +940,40 @@
                 });
             });
         })();
+    </script>
+
+    <!-- script untuk submit ke Google Form dengan entry.1921997133 -->
+    <script>
+        function submitToGoogleForm() {
+            const diaryText = document.getElementById('diaryText').value.trim();
+            
+            if (!diaryText) {
+                document.getElementById('errorMessage').style.display = 'flex';
+                document.getElementById('successMessage').style.display = 'none';
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 3000);
+                return;
+            }
+
+            // Set nilai ke hidden input
+            document.getElementById('entryValue').value = diaryText;
+            
+            // Submit form ke Google Form
+            document.getElementById('googleForm').submit();
+            
+            // Tampilkan pesan sukses
+            document.getElementById('successMessage').style.display = 'flex';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // Kosongkan textarea
+            document.getElementById('diaryText').value = '';
+            
+            // Sembunyikan pesan sukses setelah 3 detik
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+        }
     </script>
 
     <!-- script game Mekar Harapan dimasukkan persis dari game.html, hanya ubah prefix ID -->
@@ -1269,25 +1316,6 @@
             }
             document.getElementById('hasil').innerText = hasil;
             document.getElementById('motivasi').innerText = motivasi;
-        };
-
-        // Fungsi dummy untuk submit diary (biar ga error)
-        window.submitDiary = function() {
-            const text = document.getElementById('diaryText').value.trim();
-            if (text) {
-                document.getElementById('successMessage').style.display = 'flex';
-                document.getElementById('errorMessage').style.display = 'none';
-                setTimeout(() => {
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 3000);
-                document.getElementById('diaryText').value = '';
-            } else {
-                document.getElementById('errorMessage').style.display = 'flex';
-                document.getElementById('successMessage').style.display = 'none';
-                setTimeout(() => {
-                    document.getElementById('errorMessage').style.display = 'none';
-                }, 3000);
-            }
         };
     </script>
 </body>
