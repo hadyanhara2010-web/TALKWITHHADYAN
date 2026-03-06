@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Pilihan Hewan · Aku Selalu Hebat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+    <!-- CSS STYLES -->
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --bg: linear-gradient(145deg, #f9f3ee, #f0e9e2);
+            --shadow: 0 12px 28px rgba(0,0,0,0.06);
+            --radius: 28px;
+            --soft: #fefaf7;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+      
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #2e3f4a;
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .navbar {
+            background: linear-gradient(145deg, #6b4e31, #8b5a2b);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(107,78,49,0.25);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-brand span {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            cursor: pointer;
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 24px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 35px -8px rgba(60,45,35,0.25);
+            padding: 16px 0;
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            border: 1px solid #ffebdd;
+            margin-top: 8px;
+            z-index: 999;
+        }
+        .nav-dropdown.show {
+            display: flex;
+        }
+        .nav-dropdown a {
+            color: #5a473a;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 24px;
+            transition: 0.1s;
+            font-size: 1.05rem;
+            border-bottom: 1px solid #ffeee6;
+        }
+        .nav-dropdown a:last-child {
+            border-bottom: none;
+        }
+        .nav-dropdown a:hover {
+            background: #fdf1e9;
+            color: #8b5a2b;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            display: none;
+            z-index: 998;
+        }
+        .overlay.show {
+            display: block;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        h1 {
+            text-align: center;
+            background: linear-gradient(145deg, #3a5f6e, #2c4a56);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.2rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        .intro {
+            text-align: center;
+            color: #5b6f7a;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            font-weight: 300;
+            display: block;
+            width: 100%;
+            background: rgba(255,245,235,0.7);
+            padding: 12px 18px;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+            border: 1px solid #ffded0;
+        }
+        .diary-section {
+            background: linear-gradient(145deg, #fff1e6, #ffe8db);
+            border-radius: 32px;
+            padding: 28px;
+            margin-bottom: 48px;
+            border: 2px solid #ffd9b5;
+            box-shadow: var(--shadow);
+        }
+        .diary-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .diary-header h3 {
+            color: #6b4e31;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        .diary-content {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border-left: 8px solid #b6ad7a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .diary-text {
+            color: #4a3a2e;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+        .diary-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #8b7a6b;
+            font-size: 0.9rem;
+        }
+        .diary-input-container {
+            margin-top: 24px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 24px;
+            padding: 20px;
+            border: 2px dashed #b6ad7a;
+        }
+        .diary-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+        #diaryText {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 24px;
+            border: 2px solid #ffd9b5;
+            background: white;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+        }
+        #diaryText:focus {
+            border-color: #8b5a2b;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139,90,43,0.1);
+        }
+        .share-diary-btn {
+            background: linear-gradient(145deg, #6b4e31, #8b5a2b);
+            color: white;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 4px solid #4d3724;
+            white-space: nowrap;
+        }
+        .share-diary-btn:hover {
+            background: #5a3f2a;
+            transform: translateY(-2px);
+        }
+        .share-diary-btn:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+        .share-diary-btn:disabled {
+            background: #9f8b7a;
+            cursor: not-allowed;
+            transform: none;
+            border-bottom: 4px solid #6e5e52;
+        }
+        .diary-note {
+            color: #7a5a4a;
+            font-size: 0.95rem;
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 60px;
+            text-align: center;
+        }
+        .success-message {
+            background: #4d6655;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            margin-top: 16px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+        }
+        .error-message {
+            background: #b34a3a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            margin-top: 16px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Chat section dihapus sesuai permintaan */
+        
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto 60px;
+            max-width: 100%;
+            border-radius: 48px;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+            padding: 16px 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid #ffefe4;
+        }
+        .flower-slider {
+            display: flex;
+            width: max-content;
+            cursor: grab;
+            animation: autoSlide 40s linear infinite;
+            gap: 20px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .flower-slider.paused,
+        .flower-slider.dragging {
+            animation-play-state: paused;
+        }
+        @keyframes autoSlide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-33.333%); }
+        }
+        .flower-item {
+            flex: 0 0 200px;
+            text-align: center;
+            transition: 0.25s;
+        }
+        .flower-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 32px;
+            box-shadow: 0 15px 25px -8px rgba(80, 50, 25, 0.2);
+            border: 4px solid white;
+            transition: 0.2s;
+            background: #f7efe7;
+        }
+        .flower-item:hover img {
+            transform: scale(1.01);
+            border-color: #fadbc5;
+        }
+        #flowerPopup {
+            position: fixed;
+            inset: 0;
+            background: rgba(35, 25, 20, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+            padding: 16px;
+        }
+        #flowerPopup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup-content {
+            background: #fffcf9;
+            border-radius: 40px 40px 28px 28px;
+            max-width: 500px;
+            width: 100%;
+            padding: 32px 28px;
+            box-shadow: 0 30px 45px rgba(90, 60, 40, 0.2);
+            text-align: center;
+            border: 1px solid #fbe6d8;
+        }
+        .popup-content h3 {
+            color: #8b5a2b;
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .popup-content p {
+            color: #3f332a;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-size: 1.1rem;
+            background: #fff1e9;
+            padding: 22px;
+            border-radius: 24px;
+            text-align: left;
+            font-style: italic;
+            border-left: 6px solid #e6b28e;
+        }
+        .close-btn {
+            background: #9f7e66;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            border-bottom: 3px solid #6e4f3b;
+        }
+        .close-btn:hover { background: #7d604c; }
+
+        /* Puzzle + game gabungan */
+        .puzzle-section {
+            margin-top: 60px;
+            background: rgba(255, 245, 240, 0.7);
+            backdrop-filter: blur(3px);
+            border-radius: 48px 48px 36px 36px;
+            padding: 36px 20px;
+            border: 2px solid #ffe3d6;
+        }
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 5px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            background: #fbead7;
+            padding: 16px;
+            border-radius: 32px;
+            box-shadow: inset 0 0 0 2px white, inset 0 0 0 5px #f6dfce;
+        }
+        .puzzle-cell {
+            background: #fffdfa;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2e404b;
+            border-radius: 12px;
+            border: 1px solid #f3cdb1;
+            box-shadow: 0 2px 0 #d8bba8;
+            padding: 0;
+            line-height: 1;
+            text-align: center;
+            transition: all 0.6s ease;
+        }
+        .puzzle-cell.correct {
+            background: #d4f4dd !important;
+            color: #1e6f3a !important;
+            border-color: #4caf50 !important;
+            box-shadow: 0 0 0 4px rgba(76,175,80,0.5), inset 0 0 15px rgba(76,175,80,0.4);
+            animation: pulse 1.8s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+        .clue-form {
+            max-width: 600px;
+            margin: 20px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            background: white;
+            padding: 32px 24px;
+            border-radius: 40px;
+            box-shadow: 0 15px 25px -10px #ad8b78;
+            border: 1px solid #ffdcc4;
+        }
+        .clue-group label {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #4e3a2e;
+            background: #f3ede8;
+            padding: 8px 16px;
+            border-radius: 40px;
+        }
+        .clue-group input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 1.1rem;
+            border: 2px solid #ecdacf;
+            border-radius: 60px;
+            background: #fffcf5;
+            transition: 0.2s;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .clue-group input:focus {
+            border-color: #a57c5c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(165,124,92,0.15);
+        }
+        .submit-btn {
+            background: linear-gradient(145deg, #5f7f6b, #4d6655);
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            font-size: 1.25rem;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: 0.2s;
+            border-bottom: 4px solid #2f4037;
+        }
+        .submit-btn:hover { background: #3f5a4c; }
+        #hasil {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: #f7f1ea;
+            padding: 16px;
+            border-radius: 60px;
+            color: #1f5e3a;
+        }
+        #motivasi {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            color: #4b3d32;
+            background: #fff4e2;
+            padding: 28px 20px;
+            border-radius: 40px;
+            font-style: italic;
+            line-height: 1.7;
+            border-left: 10px solid #b6ad7a;
+        }
+
+        /* Gaya khusus game tanam (dari game.html) – digabung halus */
+        .mekar-game-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            margin: 40px 0 20px;
+            border-radius: 40px;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #e3f2fd 0%, #fff9c4 100%);
+            box-shadow: 0 25px 40px -10px #5f4c3b;
+            border: 4px solid #fff8e7;
+            font-family: 'Poppins', sans-serif;
+        }
+        #mekar-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .mekar-resource-icons {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            gap: 70px;
+            align-items: center;
+            padding: 0 30px;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .mekar-resource-icon {
+            width: 80px;
+            height: 80px;
+            cursor: grab;
+            pointer-events: auto;
+            transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+        .mekar-resource-icon:active { cursor: grabbing; }
+        .mekar-resource-icon.dragging {
+            transform: scale(1.12) rotate(8deg);
+            z-index: 200;
+            position: fixed;
+            pointer-events: none;
+        }
+        .mekar-resource-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.18));
+        }
+        .mekar-progress-container {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            padding: 0 20px;
+            text-align: center;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .mekar-progress-phase {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #5D4037;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 6px rgba(255,255,255,0.85);
+        }
+        .mekar-progress-resources {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #4E342E;
+        }
+        .mekar-progress-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.94);
+            padding: 10px 20px;
+            border-radius: 999px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            border: 1px solid rgba(255,255,255,0.7);
+            backdrop-filter: blur(6px);
+        }
+        .mekar-completion-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.96);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            z-index: 1000;
+            animation: mekarFadeIn 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mekar-completion-overlay.show { display: flex; }
+        .mekar-completion-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #F57C00;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: mekarBounceIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .mekar-completion-message {
+            font-size: 1.2rem;
+            color: #5D4037;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 90%;
+            margin-bottom: 30px;
+            animation: mekarFadeInUp 0.9s ease 0.35s both;
+        }
+        .mekar-restart-button {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #66BB6A, #43A047);
+            border: none;
+            border-radius: 999px;
+            padding: 16px 42px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(67,160,71,0.35);
+            transition: all 0.32s ease;
+            min-width: 260px;
+            min-height: 70px;
+            animation: mekarFadeInUp 1s ease 0.55s both;
+        }
+        @keyframes mekarFadeIn { from{ opacity: 0; } to{ opacity: 1; } }
+        @keyframes mekarFadeInUp { from{ opacity:0; transform:translateY(40px); } to{ opacity:1; transform:translateY(0); } }
+        @keyframes mekarBounceIn {
+            0%{ opacity:0; transform:scale(0.4); }
+            50%{ opacity:1; transform:scale(1.08); }
+            70%{ transform:scale(0.92); }
+            100%{ transform:scale(1); }
+        }
+        .mekar-plant-highlight {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px; height: 550px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,235,59,0.28) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.18s;
+            z-index: 15;
+        }
+        .mekar-plant-highlight.active { opacity: 1; }
+        .mekar-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 150;
+            animation: mekarParticleFloat 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes mekarParticleFloat {
+            0%{ opacity:1; transform:translateY(0) scale(1); }
+            100%{ opacity:0; transform:translateY(-120px) scale(0.4); }
+        }
+        @media (max-width:600px){
+            .mekar-resource-icons{ gap:40px; }
+            .mekar-resource-icon{ width:70px; height:70px; }
+            .mekar-progress-phase{ font-size:1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span>Talk With Hadyan</span>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="overlay" id="overlay"></div>
+        <div class="nav-dropdown" id="navDropdown">
+            <a href="#beranda">Beranda</a>
+            <a href="#diary">Diary</a>
+            <a href="#puzzle">Game</a>
+            <a href="#bunga">Kartu</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="diary" class="diary-section">
+            <div class="diary-header">
+                <span style="font-size: 2rem;">📖</span>
+                <h3>Diary Anonim</h3>
+            </div>
+            <div class="diary-content">
+                <div class="diary-text">
+                    "Hari ini aku jalan sendiri ke pantai. Awalnya takut, tapi ternyata seru.
+                    Aku belajar kalau sendirian bukan berarti kesepian. Ada banyak hal indah
+                    yang bisa aku nikmati tanpa harus nunggu orang lain. Aku beli es kelapa
+                    muda, duduk di pinggir pantai, dan ngerasa cukup sama diri sendiri.
+                    Mungkin ini caraku belajar mencintai diriku."
+                </div>
+                <div class="diary-meta">
+                    <span>🕒 2 jam yang lalu</span>
+                </div>
+            </div>
+            <div class="diary-input-container">
+                <div style="margin-bottom: 16px; color: #6b4e31; font-weight: 600;">
+                    ✏️ Bagikan pengalaman menyenangkanmu:
+                </div>
+                <div class="diary-input-wrapper">
+                    <textarea id="diaryText" placeholder="Tulis pengalaman menyenangkanmu di sini... (contoh: Hari ini aku berhasil melakukan hal yang sebelumnya aku takutkan...)"></textarea>
+                    <button onclick="submitDiary()" id="diarySubmitBtn" class="share-diary-btn">
+                        <span>📤</span> Bagikan
+                    </button>
+                </div>
+                <div id="successMessage" class="success-message">
+                    <span>✅</span> Terima kasih! Diary-mu sudah terkirim secara anonim.
+                </div>
+                <div id="errorMessage" class="error-message">
+                    <span>❌</span> Gagal mengirim. Coba lagi ya!
+                </div>
+                <div class="diary-note">
+                    Pesanmu akan dikirim langsung ke Diary Anonim. Tidak wajib diisi, tapi kalau mau berbagi pasti akan menginspirasi yang lain ✨
+                </div>
+            </div>
+            <div id="newDiariesContainer"></div>
+        </section>
+
+        <!-- BAGIAN CHAT DIHAPUS SESUAI PERMINTAAN -->
+
+        <section id="puzzle" class="puzzle-section">
+            <h2 style="text-align:center; font-size:1.9rem; font-weight:600; color:#5a4740; margin-bottom:6px;">Temukan Urutan Huruf</h2>
+            <p style="text-align:center; max-width:550px; margin:0 auto 25px; color:#6d5c53; background:#ffeee5; padding:10px 22px; border-radius:60px; font-size:0.95rem;">
+                Ada 3 kata tersembunyi. Hanya satu susunan untuk masing-masing.
+            </p>
+            <div class="puzzle-grid" id="puzzleGrid">
+                <!-- baris 1 -->
+                <div class="puzzle-cell">F</div><div class="puzzle-cell">G</div><div class="puzzle-cell">H</div><div class="puzzle-cell">A</div><div class="puzzle-cell">K</div><div class="puzzle-cell">U</div><div class="puzzle-cell">S</div><div class="puzzle-cell">D</div><div class="puzzle-cell">L</div><div class="puzzle-cell">P</div><div class="puzzle-cell">Z</div><div class="puzzle-cell">M</div>
+                <!-- baris 2 -->
+                <div class="puzzle-cell">B</div><div class="puzzle-cell">N</div><div class="puzzle-cell">V</div><div class="puzzle-cell">C</div><div class="puzzle-cell">E</div><div class="puzzle-cell">T</div><div class="puzzle-cell">W</div><div class="puzzle-cell">Y</div><div class="puzzle-cell">Q</div><div class="puzzle-cell">J</div><div class="puzzle-cell">X</div><div class="puzzle-cell">O</div>
+                <!-- baris 3 -->
+                <div class="puzzle-cell">K</div><div class="puzzle-cell">S</div><div class="puzzle-cell">E</div><div class="puzzle-cell">L</div><div class="puzzle-cell">A</div><div class="puzzle-cell">L</div><div class="puzzle-cell">U</div><div class="puzzle-cell">D</div><div class="puzzle-cell">M</div><div class="puzzle-cell">F</div><div class="puzzle-cell">P</div><div class="puzzle-cell">Z</div>
+                <!-- baris 4 -->
+                <div class="puzzle-cell">O</div><div class="puzzle-cell">N</div><div class="puzzle-cell">H</div><div class="puzzle-cell">A</div><div class="puzzle-cell">K</div><div class="puzzle-cell">A</div><div class="puzzle-cell">T</div><div class="puzzle-cell">L</div><div class="puzzle-cell">R</div><div class="puzzle-cell">G</div><div class="puzzle-cell">I</div><div class="puzzle-cell">Y</div>
+                <!-- baris 5 -->
+                <div class="puzzle-cell">C</div><div class="puzzle-cell">A</div><div class="puzzle-cell">E</div><div class="puzzle-cell">B</div><div class="puzzle-cell">T</div><div class="puzzle-cell">I</div><div class="puzzle-cell">U</div><div class="puzzle-cell">W</div><div class="puzzle-cell">E</div><div class="puzzle-cell">B</div><div class="puzzle-cell">F</div><div class="puzzle-cell">Q</div>
+                <!-- baris 6 -->
+                <div class="puzzle-cell">J</div><div class="puzzle-cell">K</div><div class="puzzle-cell">B</div><div class="puzzle-cell">A</div><div class="puzzle-cell">N</div><div class="puzzle-cell">O</div><div class="puzzle-cell">P</div><div class="puzzle-cell">U</div><div class="puzzle-cell">V</div><div class="puzzle-cell">W</div><div class="puzzle-cell">X</div><div class="puzzle-cell">D</div>
+                <!-- baris 7 -->
+                <div class="puzzle-cell">G</div><div class="puzzle-cell">H</div><div class="puzzle-cell">A</div><div class="puzzle-cell">T</div><div class="puzzle-cell">K</div><div class="puzzle-cell">L</div><div class="puzzle-cell">M</div><div class="puzzle-cell">N</div><div class="puzzle-cell">O</div><div class="puzzle-cell">P</div><div class="puzzle-cell">Q</div><div class="puzzle-cell">R</div>
+                <!-- baris 8 -->
+                <div class="puzzle-cell">S</div><div class="puzzle-cell">T</div><div class="puzzle-cell">T</div><div class="puzzle-cell">V</div><div class="puzzle-cell">W</div><div class="puzzle-cell">X</div><div class="puzzle-cell">Y</div><div class="puzzle-cell">Z</div><div class="puzzle-cell">A</div><div class="puzzle-cell">B</div><div class="puzzle-cell">C</div><div class="puzzle-cell">D</div>
+            </div>
+            <form class="clue-form" onsubmit="event.preventDefault(); cekJawaban();">
+                <div class="clue-group">
+                    <label>1. Kata ganti orang pertama tunggal</label>
+                    <input type="text" id="ans1" placeholder="Tulis jawaban..." autocomplete="off">
+                </div>
+                <div class="clue-group">
+                    <label>2. Terus menerus / berulang-ulang</label>
+                    <input type="text" id="ans2" placeholder="Tulis jawaban..." autocomplete="off">
+                </div>
+                <div class="clue-group">
+                    <label>3. Lagu Coboy Junior (kamu ....) & kamu ____</label>
+                    <input type="text" id="ans3" placeholder="Tulis jawaban..." autocomplete="off">
+                </div>
+                <button type="submit" class="submit-btn">✨ Cek Jawaban ✨</button>
+            </form>
+            <div id="hasil"></div>
+            <div id="motivasi"></div>
+
+            <!-- GABUNGAN GAME.HTML (tanaman) di bawah puzzle, tanpa mengubah apapun -->
+            <div style="margin-top: 50px;">
+                <h3 style="text-align:center; color:#6b4e31;">🌱 Bunga Harapan, rawatlah hingga mekar</h3>
+                <div class="mekar-game-container" id="mekar-game-container">
+                    <canvas id="mekar-canvas"></canvas>
+                    <div class="mekar-plant-highlight" id="mekar-plant-highlight"></div>
+                    
+                    <div class="mekar-resource-icons" id="mekar-resource-icons">
+                        <div class="mekar-resource-icon" id="mekar-water-icon" data-type="water">
+                            <img id="mekar-water-icon-img" alt="Air">
+                        </div>
+                        <div class="mekar-resource-icon" id="mekar-fertilizer-icon" data-type="fertilizer">
+                            <img id="mekar-fertilizer-icon-img" alt="Pupuk">
+                        </div>
+                    </div>
+                    
+                    <div class="mekar-progress-container" id="mekar-progress-container">
+                        <div class="mekar-progress-phase" id="mekar-progress-phase">Fase 1 dari 5</div>
+                        <div class="mekar-progress-resources">
+                            <div class="mekar-progress-item">
+                                <span>💧</span>
+                                <span id="mekar-water-progress">0/1</span>
+                            </div>
+                            <div class="mekar-progress-item">
+                                <span>🌱</span>
+                                <span id="mekar-fertilizer-progress">0/1</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mekar-completion-overlay" id="mekar-completion-overlay">
+                        <div class="mekar-completion-title">Proud of You!</div>
+                        <div class="mekar-completion-message" id="mekar-completion-message">
+                            Layaknya tumbuhan ini, jika kamu rajin dan berfokus pada prosesmu sendiri, kelak kamu akan bersemi indah.
+                        </div>
+                        <button class="mekar-restart-button" id="mekar-restart-button">Tumbuhkan Bunga Lainnya</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <h1 id="bunga">Tentukan Pilihanmu</h1>
+    <p class="intro">Pilihlah hewan yang menggambarkan dirimu</p>
+
+    <div class="slider-wrapper">
+        <div class="flower-slider" id="slider">
+            <div class="flower-item" data-flower="burung-hantu"><img src="1.jpeg" alt="Burung Hantu" loading="lazy"></div>
+            <div class="flower-item" data-flower="singa"><img src="2.jpeg" alt="Singa" loading="lazy"></div>
+            <div class="flower-item" data-flower="badak"><img src="3.jpeg" alt="Badak" loading="lazy"></div>
+            <div class="flower-item" data-flower="gajah"><img src="4.jpeg" alt="Gajah" loading="lazy"></div>
+            <div class="flower-item" data-flower="semut"><img src="5.jpeg" alt="Semut" loading="lazy"></div>
+            <div class="flower-item" data-flower="burung-hantu"><img src="1.jpeg" alt="Burung Hantu" loading="lazy"></div>
+            <div class="flower-item" data-flower="singa"><img src="2.jpeg" alt="Singa" loading="lazy"></div>
+            <div class="flower-item" data-flower="badak"><img src="3.jpeg" alt="Badak" loading="lazy"></div>
+            <div class="flower-item" data-flower="gajah"><img src="4.jpeg" alt="Gajah" loading="lazy"></div>
+            <div class="flower-item" data-flower="semut"><img src="5.jpeg" alt="Semut" loading="lazy"></div>
+            <div class="flower-item" data-flower="burung-hantu"><img src="1.jpeg" alt="Burung Hantu" loading="lazy"></div>
+            <div class="flower-item" data-flower="singa"><img src="2.jpeg" alt="Singa" loading="lazy"></div>
+            <div class="flower-item" data-flower="badak"><img src="3.jpeg" alt="Badak" loading="lazy"></div>
+            <div class="flower-item" data-flower="gajah"><img src="4.jpeg" alt="Gajah" loading="lazy"></div>
+            <div class="flower-item" data-flower="semut"><img src="5.jpeg" alt="Semut" loading="lazy"></div>
+        </div>
+    </div>
+
+    <div id="flowerPopup">
+        <div class="popup-content">
+            <h3 id="flowerTitle">🌸</h3>
+            <p id="flowerDesc"></p>
+            <button class="close-btn" onclick="document.getElementById('flowerPopup').classList.remove('active')">Tutup</button>
+        </div>
+    </div>
+
+    <!-- script untuk hamburger menu (agar tiga titik bisa diklik) -->
+    <script>
+        (function() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const dropdown = document.getElementById('navDropdown');
+            const overlay = document.getElementById('overlay');
+
+            function toggleMenu(show) {
+                if (show) {
+                    dropdown.classList.add('show');
+                    overlay.classList.add('show');
+                } else {
+                    dropdown.classList.remove('show');
+                    overlay.classList.remove('show');
+                }
+            }
+
+            hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = dropdown.classList.contains('show');
+                toggleMenu(!isOpen);
+            });
+
+            overlay.addEventListener('click', () => {
+                toggleMenu(false);
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && dropdown.classList.contains('show')) {
+                    toggleMenu(false);
+                }
+            });
+
+            // Tutup dropdown jika klik di luar (opsional)
+            document.addEventListener('click', (e) => {
+                if (!dropdown.contains(e.target) && !hamburger.contains(e.target) && dropdown.classList.contains('show')) {
+                    toggleMenu(false);
+                }
+            });
+
+            // Smooth scroll untuk link dropdown
+            dropdown.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    if (targetId === '#beranda') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                    toggleMenu(false);
+                });
+            });
+        })();
+    </script>
+
+    <!-- script game Mekar Harapan dimasukkan persis dari game.html, hanya ubah prefix ID -->
+    <script>
+        (function() {
+            // ────────────────────────────────────────────────
+            // GAME CONFIG (Mekar Harapan)
+            // ────────────────────────────────────────────────
+            const gameConfig = {
+                growthSpeed: 0.5,
+                phaseRequirements: [1, 3, 5, 6, 8],
+                inspirationalMessage: "Layaknya tumbuhan ini, jika kamu rajin dan berfokus pada prosesmu sendiri, kelak kamu akan bersemi indah."
+            };
+
+            const assets = {
+                "soil_ground": "https://d2oir5eh8rty2e.cloudfront.net/assets/images/soil_ground_f35f4e10-0e30-4d49-8bd3-0865178c246d.webp",
+                "plant_phase1_sprout": "https://d2oir5eh8rty2e.cloudfront.net/assets/images/plant_phase1_sprout_716ddc9a-3c02-42e6-90de-c2fa17d94614.webp",
+                "plant_phase2_young": "https://d2oir5eh8rty2e.cloudfront.net/assets/images/plant_phase2_young_73e86df2-2a12-44e7-9a8a-371ffb56cc38.webp",
+                "plant_phase3_teen": "https://d2oir5eh8rty2e.cloudfront.net/assets/images/plant_phase3_teen_5e3f3d79-4b08-4248-ac47-6244e80d93fa.webp",
+                "plant_phase4_budding": "https://d2oir5eh8rty2e.cloudfront.net/assets/images/plant_phase4_budding_7cafa5b6-d25b-4603-94e8-bd61e9c8eb6c.webp",
+                "sunflower_bloomed_happy": "https://d2oir5eh8rty2e.cloudfront.net/assets/images/sunflower_bloomed_happy_1bfd5f0f-1a5e-4f1a-98d3-b7e094e4d25e.webp",
+                "water_icon": "https://d2oir5eh8rty2e.cloudfront.net/assets/images/water_icon_53ac608b-d64a-44fd-834a-d1c001824fc2.webp",
+                "fertilizer_icon": "https://d2oir5eh8rty2e.cloudfront.net/assets/images/fertilizer_icon_19a53a28-3f49-488f-bea4-9dc1eca2013f.webp",
+                "water_drop_sfx": "https://d2oir5eh8rty2e.cloudfront.net/assets/sounds/effect/water_drop_sfx_4db55eda-d0ee-43f2-8e9c-cd3c635ad9b6.mp3",
+                "fertilizer_drop_sfx": "https://d2oir5eh8rty2e.cloudfront.net/assets/sounds/effect/fertilizer_drop_sfx_92cb7b6e-b914-4ccd-b138-ebf57fd2f87a.mp3",
+                "growth_transition_sfx": "https://d2oir5eh8rty2e.cloudfront.net/assets/sounds/effect/growth_transition_sfx_5df0a2a1-aef0-4fda-aec4-e3ef6a14704f.mp3",
+                "bloom_complete_sfx": "https://d2oir5eh8rty2e.cloudfront.net/assets/sounds/effect/bloom_complete_sfx_58d1738c-3ffe-4719-ab16-a82387d2c37b.mp3",
+                "background_music": "https://d2oir5eh8rty2e.cloudfront.net/assets/sounds/effect/background_music_4bb5c16a-3728-47b7-9506-abb930af52d7.mp3"
+            };
+
+            const phaseAssets = {
+                1: 'plant_phase1_sprout',
+                2: 'plant_phase2_young',
+                3: 'plant_phase3_teen',
+                4: 'plant_phase4_budding',
+                5: 'sunflower_bloomed_happy'
+            };
+
+            // elemen dengan prefiks mekar-
+            const canvas = document.getElementById('mekar-canvas');
+            const ctx = canvas.getContext('2d');
+            const waterIcon = document.getElementById('mekar-water-icon');
+            const fertilizerIcon = document.getElementById('mekar-fertilizer-icon');
+            const waterIconImg = document.getElementById('mekar-water-icon-img');
+            const fertilizerIconImg = document.getElementById('mekar-fertilizer-icon-img');
+            const plantHighlight = document.getElementById('mekar-plant-highlight');
+            const progressPhase = document.getElementById('mekar-progress-phase');
+            const waterProgress = document.getElementById('mekar-water-progress');
+            const fertilizerProgress = document.getElementById('mekar-fertilizer-progress');
+            const completionOverlay = document.getElementById('mekar-completion-overlay');
+            const completionMessage = document.getElementById('mekar-completion-message');
+            const restartButton = document.getElementById('mekar-restart-button');
+
+            let currentPhase = 1;
+            let waterCount = 0;
+            let fertilizerCount = 0;
+            let isCompleted = false;
+            let isDragging = false;
+            let dragType = null;
+            let lastDropTime = 0;
+            const DROP_COOLDOWN = 500;
+            let canvasWidth, canvasHeight;
+
+            const assetCache = { images: {}, audio: {} };
+            let audioContext = null;
+            let audioBuffers = {};
+            let backgroundMusicSource = null;
+
+            function resizeCanvas() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+                canvasWidth = canvas.width;
+                canvasHeight = canvas.height;
+            }
+
+            async function preloadAssets() {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const imageKeys = ['soil_ground','plant_phase1_sprout','plant_phase2_young','plant_phase3_teen','plant_phase4_budding','sunflower_bloomed_happy','water_icon','fertilizer_icon'];
+                await Promise.all(imageKeys.map(key => {
+                    return new Promise(resolve => {
+                        const img = new Image();
+                        img.crossOrigin = "anonymous";
+                        img.onload = () => { assetCache.images[key] = img; resolve(); };
+                        img.onerror = resolve;
+                        img.src = assets[key];
+                    });
+                }));
+                waterIconImg.src = assets.water_icon;
+                fertilizerIconImg.src = assets.fertilizer_icon;
+
+                const audioKeys = ['water_drop_sfx','fertilizer_drop_sfx','growth_transition_sfx','bloom_complete_sfx','background_music'];
+                for (const key of audioKeys) {
+                    try {
+                        const res = await fetch(assets[key]);
+                        const ab = await res.arrayBuffer();
+                        const buffer = await audioContext.decodeAudioData(ab);
+                        audioBuffers[key] = buffer;
+                    } catch(e){}
+                }
+            }
+
+            function playSound(id) {
+                if (!audioContext || !audioBuffers[id]) return;
+                const source = audioContext.createBufferSource();
+                source.buffer = audioBuffers[id];
+                source.connect(audioContext.destination);
+                source.start(0);
+            }
+
+            function playBackgroundMusic() {
+                if (!audioContext || !audioBuffers['background_music'] || backgroundMusicSource) return;
+                backgroundMusicSource = audioContext.createBufferSource();
+                backgroundMusicSource.buffer = audioBuffers['background_music'];
+                backgroundMusicSource.loop = true;
+                const gain = audioContext.createGain();
+                gain.gain.value = 0.28;
+                backgroundMusicSource.connect(gain);
+                gain.connect(audioContext.destination);
+                backgroundMusicSource.start(0);
+            }
+
+            function initGame() {
+                currentPhase = 1;
+                waterCount = 0;
+                fertilizerCount = 0;
+                isCompleted = false;
+                updateProgress();
+                completionOverlay.classList.remove('show');
+                playBackgroundMusic();
+            }
+
+            function updateProgress() {
+                const req = gameConfig.phaseRequirements[currentPhase-1] || 3;
+                progressPhase.textContent = `Fase ${currentPhase} dari 5`;
+                waterProgress.textContent = `${waterCount}/${req}`;
+                fertilizerProgress.textContent = `${fertilizerCount}/${req}`;
+            }
+
+            function drawImage(key, x, y, w, h) {
+                const img = assetCache.images[key];
+                if (!img) return;
+                ctx.drawImage(img, x, y, w, h);
+            }
+
+            function render() {
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                const soilY = canvasHeight * 0.64;
+                const soilW = Math.min(180, canvasWidth * 0.35);
+                const soilH = soilW * 0.65;
+                const soilX = (canvasWidth - soilW) / 2;
+                drawImage('soil_ground', soilX, soilY, soilW, soilH);
+                
+                if (currentPhase >= 1 && currentPhase <= 5) {
+                    const key = phaseAssets[currentPhase];
+                    const plantH = 40 + (currentPhase * 50);
+                    const plantW = plantH * 0.75;
+                    const plantX = (canvasWidth - plantW) / 2;
+                    const plantY = soilY - plantH + 35;
+                    drawImage(key, plantX, plantY, plantW, plantH);
+                }
+            }
+
+            function createParticles(x, y, type) {
+                const count = 10;
+                const colors = type === 'water' ? ['#64B5F6','#42A5F5','#2196F3'] : ['#8B6F47','#A1887F','#9CCC65'];
+                for (let i = 0; i < count; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'mekar-particle';
+                    p.style.left = x + 'px';
+                    p.style.top  = y + 'px';
+                    p.style.background = colors[i % colors.length];
+                    p.style.width = '14px'; p.style.height = '14px'; p.style.borderRadius = '50%';
+                    document.getElementById('mekar-game-container').appendChild(p);
+                    setTimeout(() => p.remove(), 1200);
+                }
+            }
+
+            function giveResource(type) {
+                if (isCompleted) return;
+                const now = Date.now();
+                if (now - lastDropTime < DROP_COOLDOWN) return;
+                lastDropTime = now;
+
+                if (type === 'water') waterCount++;
+                else fertilizerCount++;
+
+                playSound(type + '_drop_sfx');
+                updateProgress();
+                createParticles(canvasWidth/2, canvasHeight*0.48, type);
+                checkPhaseComplete();
+            }
+
+            function checkPhaseComplete() {
+                const req = gameConfig.phaseRequirements[currentPhase-1] || 3;
+                if (waterCount >= req && fertilizerCount >= req) {
+                    if (currentPhase < 5) {
+                        currentPhase++;
+                        waterCount = fertilizerCount = 0;
+                        playSound('growth_transition_sfx');
+                        updateProgress();
+                        render();
+                    } else {
+                        isCompleted = true;
+                        completionMessage.textContent = gameConfig.inspirationalMessage;
+                        completionOverlay.classList.add('show');
+                        if (backgroundMusicSource) {
+                            backgroundMusicSource.stop();
+                            backgroundMusicSource = null;
+                        }
+                    }
+                }
+            }
+
+            function setupInteractions() {
+                function startDrag(e, type) {
+                    e.preventDefault();
+                    if (isCompleted) return;
+                    isDragging = true;
+                    dragType = type;
+                    const icon = type === 'water' ? waterIcon : fertilizerIcon;
+                    icon.classList.add('dragging');
+                }
+                function moveDrag(e) {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const t = e.touches ? e.touches[0] : e;
+                    const icon = dragType === 'water' ? waterIcon : fertilizerIcon;
+                    icon.style.left = (t.clientX - 40) + 'px';
+                    icon.style.top  = (t.clientY - 40) + 'px';
+                    const rect = canvas.getBoundingClientRect();
+                    const overPlant = t.clientX > rect.left+50 && t.clientX < rect.right-50 && t.clientY > rect.top+80 && t.clientY < rect.bottom-80;
+                    plantHighlight.classList.toggle('active', overPlant);
+                }
+                function endDrag(e) {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const t = e.changedTouches ? e.changedTouches[0] : e;
+                    const rect = canvas.getBoundingClientRect();
+                    const overPlant = t.clientX > rect.left+50 && t.clientX < rect.right-50 && t.clientY > rect.top+80 && t.clientY < rect.bottom-80;
+                    if (overPlant) giveResource(dragType);
+                    else {
+                        const icon = dragType === 'water' ? waterIcon : fertilizerIcon;
+                        icon.style.animation = 'shake 0.4s';
+                        setTimeout(() => icon.style.animation = '', 400);
+                    }
+                    const icon = dragType === 'water' ? waterIcon : fertilizerIcon;
+                    icon.classList.remove('dragging');
+                    icon.style.position = icon.style.left = icon.style.top = '';
+                    plantHighlight.classList.remove('active');
+                    isDragging = dragType = null;
+                }
+
+                waterIcon.addEventListener('touchstart', e => startDrag(e, 'water'), {passive: false});
+                fertilizerIcon.addEventListener('touchstart', e => startDrag(e, 'fertilizer'), {passive: false});
+                document.addEventListener('touchmove', moveDrag, {passive: false});
+                document.addEventListener('touchend', endDrag, {passive: false});
+                waterIcon.addEventListener('mousedown', e => startDrag(e, 'water'));
+                fertilizerIcon.addEventListener('mousedown', e => startDrag(e, 'fertilizer'));
+                document.addEventListener('mousemove', moveDrag);
+                document.addEventListener('mouseup', endDrag);
+            }
+
+            async function startMekar() {
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                await preloadAssets();
+                initGame();
+                setupInteractions();
+                restartButton.onclick = () => { initGame(); render(); };
+                function loop() { render(); requestAnimationFrame(loop); }
+                loop();
+            }
+            startMekar();
+        })();
+    </script>
+
+    <!-- sisanya fungsi index asli -->
+    <script>
+        const descriptions = {
+            "burung-hantu": { title: "🦉 Burung Hantu – Bijaksana dalam Sunyi", desc: "Tak perlu selalu terlihat untuk menjadi hebat. Seperti burung hantu, gunakan ketenanganmu untuk berpikir tajam dan melangkah dengan penuh perhitungan." },
+            "singa": { title: "🦁 Singa – Berani Memimpin", desc: "Jadilah seperti singa: bukan karena paling keras suaranya, tetapi karena paling yakin pada dirinya sendiri." },
+            "badak": { title: "🦏 Badak – Tangguh dan Tak Mudah Goyah", desc: "Seperti badak, hadapi rintangan dengan kekuatan dan keteguhan. Jangan mundur hanya karena jalan terasa berat." },
+            "gajah": { title: "🐘 Gajah – Kuat dan Penuh Ingatan", desc: "Belajarlah dari gajah: kuat dalam langkah, lembut dalam hati, dan tak melupakan pelajaran hidup." },
+            "semut": { title: "🐜 Semut – Kecil Namun Gigih", desc: "Jangan remehkan langkah kecilmu. Seperti semut, kerja keras dan konsistensi akan membawa hasil besar." }
+        };
+
+        document.querySelectorAll('.flower-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const key = this.getAttribute('data-flower');
+                if (descriptions[key]) {
+                    document.getElementById('flowerTitle').textContent = descriptions[key].title;
+                    document.getElementById('flowerDesc').textContent = descriptions[key].desc;
+                    document.getElementById('flowerPopup').classList.add('active');
+                }
+            });
+        });
+
+        const slider = document.querySelector('#slider');
+        let isDragging = false, startX, scrollLeft;
+        function startDrag(e) { isDragging = true; slider.classList.add('dragging'); startX = (e.pageX || e.touches[0].pageX) - slider.offsetLeft; scrollLeft = slider.scrollLeft; e.preventDefault(); }
+        function stopDrag() { isDragging = false; slider.classList.remove('dragging'); }
+        function drag(e) { if (!isDragging) return; e.preventDefault(); const x = (e.pageX || e.touches[0].pageX) - slider.offsetLeft; const walk = (x - startX) * 1.5; slider.scrollLeft = scrollLeft - walk; }
+        slider.addEventListener('mousedown', startDrag);
+        slider.addEventListener('mouseleave', stopDrag);
+        slider.addEventListener('mouseup', stopDrag);
+        slider.addEventListener('mousemove', drag);
+        slider.addEventListener('touchstart', startDrag);
+        slider.addEventListener('touchend', stopDrag);
+        slider.addEventListener('touchcancel', stopDrag);
+        slider.addEventListener('touchmove', drag);
+
+        function highlightCorrectAnswers() {
+            const cells = document.querySelectorAll('.puzzle-cell');
+            cells[3].classList.add('correct'); cells[4].classList.add('correct'); cells[5].classList.add('correct');
+            cells[6].classList.add('correct'); cells[7].classList.add('correct'); cells[8].classList.add('correct'); cells[9].classList.add('correct'); cells[10].classList.add('correct');
+            cells[27].classList.add('correct'); cells[39].classList.add('correct'); cells[51].classList.add('correct'); cells[63].classList.add('correct'); cells[75].classList.add('correct');
+        }
+
+        window.cekJawaban = function() {
+            const ans1 = document.getElementById('ans1').value.trim().toUpperCase();
+            const ans2 = document.getElementById('ans2').value.trim().toUpperCase();
+            const ans3 = document.getElementById('ans3').value.trim().toUpperCase();
+            let hasil = "", motivasi = "";
+            if (ans1 === "AKU" && ans2 === "TERUS" && ans3 === "HEBAT") {
+                hasil = "✅ SEMUA JAWABAN BENAR! SELAMAT!";
+                motivasi = "Kamu memang hebat! Teruslah menjadi pribadi yang tangguh dan rendah hati. Ingatlah selalu: 'Aku bisa, aku hebat, aku berarti.' - Hadyan";
+                highlightCorrectAnswers();
+            } else if (ans1 === "AKU" && ans2 === "TERUS") {
+                hasil = "⚠️ Jawaban 3 belum tepat.";
+                motivasi = "Cari kata vertikal di kolom ke-4 dari kiri, mulai dari baris ke-3 ke bawah.";
+            } else if (ans1 === "AKU" && ans3 === "HEBAT") {
+                hasil = "⚠️ Jawaban 2 belum tepat.";
+                motivasi = "Cari 'TERUS' secara mendatar di baris awal.";
+            } else if (ans2 === "TERUS" && ans3 === "HEBAT") {
+                hasil = "⚠️ Jawaban 1 belum tepat.";
+                motivasi = "Cari kata ganti orang pertama tunggal ('AKU').";
+            } else {
+                hasil = "❌ Masih ada yang salah. Coba lagi!";
+                motivasi = "Jangan menyerah! Setiap percobaan membuatmu lebih dekat ke jawaban.";
+            }
+            document.getElementById('hasil').innerText = hasil;
+            document.getElementById('motivasi').innerText = motivasi;
+        };
+
+        // Fungsi dummy untuk submit diary (biar ga error)
+        window.submitDiary = function() {
+            const text = document.getElementById('diaryText').value.trim();
+            if (text) {
+                document.getElementById('successMessage').style.display = 'flex';
+                document.getElementById('errorMessage').style.display = 'none';
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000);
+                document.getElementById('diaryText').value = '';
+            } else {
+                document.getElementById('errorMessage').style.display = 'flex';
+                document.getElementById('successMessage').style.display = 'none';
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 3000);
+            }
+        };
+    </script>
+</body>
+</html>
